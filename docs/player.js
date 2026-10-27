@@ -4,6 +4,9 @@
 let player = null;
 let ready = false;
 let pending = null;
+
+// 操作を受け付ける拡張。ID は manifest の key で固定している（ストア公開後はその ID を追加する）
+const ALLOWED_PARENTS = ['chrome-extension://fbflgicdkbijbhcodafdocpmkpdpnoak'];
 let parentOrigin = null;
 
 const send = (msg) => parentOrigin && window.parent.postMessage(msg, parentOrigin);
@@ -16,12 +19,13 @@ function load(id) {
 }
 
 window.addEventListener('message', (ev) => {
-  if (ev.source !== window.parent || ev.data?.type !== 'load' || typeof ev.data.id !== 'string') return;
+  if (!ALLOWED_PARENTS.includes(ev.origin) || ev.source !== window.parent) return;
+  if (ev.data?.type !== 'load' || typeof ev.data.id !== 'string') return;
   parentOrigin = ev.origin;
   load(ev.data.id);
 });
 
-window.onYouTubeIframeAPIReady = () => {
+function createPlayer() {
   player = new YT.Player('p', {
     width: '100%',
     height: '100%',
@@ -34,8 +38,12 @@ window.onYouTubeIframeAPIReady = () => {
       },
       onStateChange: (e) => {
         if (e.data === YT.PlayerState.ENDED) send({ type: 'ended' });
+        else if (e.data === YT.PlayerState.PLAYING) send({ type: 'playing' });
       },
       onError: (e) => send({ type: 'error', code: e.data }),
     },
   });
-};
+}
+
+// player.js を iframe_api より先に読むので、コールバックの登録が必ず間に合う
+window.onYouTubeIframeAPIReady = createPlayer;

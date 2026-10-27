@@ -8,7 +8,8 @@
 </head>
 <body>
   <div id="p"></div>
-  <script src="https://www.youtube.com/iframe_api"></script>
+  <!-- iframe_api がキャッシュ済みだと player.js より先に実行されうるため、player.js を先に読む -->
   <script src="player.js"></script>
+  <script src="https://www.youtube.com/iframe_api"></script>
 </body>
 </html>

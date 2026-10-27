@@ -3,6 +3,7 @@
   "name": "ランダムYoutube",
   "version": "0.1.0",
   "description": "YouTube をテレビのように。選べない、ランダムな人気動画が流れ続けます。",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyuwHbH+Jfx6Pks4ZU8ZTuwYnkL6hA2TGnVzx2ubgSf8fz0iI1nCOPgyG6FbgjLsF6FewQVWXZGZaZeIM7LhEfHkJWxCzDoAr6hvcfDMDhRAMR/EQ47K2xrLKT0P2b6kND8Lo2ZyShJFIMvqZ99HCSa0q+w40f/eLESYJrVuWNpNP9BCndbr7CWg51LYQ4x1p4yj+qu0kBTP0HqBP/G4+SHa2qvFNRZKvjvgKKsAPBWH2PFQgG5L+sAt17sRCVzQrXfqJ/WAANStAMlDgIJjZDB9qEihjM+SPCDw/3uYQdUq8yRQ+inrClgRerG+EQGd+irVsjo1TBosmRnmnt63pBQIDAQAB",
   "action": {
     "default_title": "ランダムYoutube を開く"
   },
@@ -11,6 +12,10 @@
     "type": "module"
   },
   "options_page": "options.html",
-  "permissions": ["storage"],
-  "host_permissions": ["https://www.googleapis.com/*"]
+  "permissions": [
+    "storage"
+  ],
+  "host_permissions": [
+    "https://www.googleapis.com/*"
+  ]
 }

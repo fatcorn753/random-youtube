@@ -4,6 +4,7 @@ import { PLAYER_ORIGIN, PLAYER_URL } from './src/config.js';
 import { loadSettings } from './src/storage.js';
 
 const ERROR_RETRY_MS = 1500;
+const START_TIMEOUT_MS = 15000;
 
 const $ = (id) => document.getElementById(id);
 const frame = $('frame');
@@ -13,6 +14,7 @@ const bar = $('bar');
 let programmer = null;
 let ticket = 0; // 1 本の動画につき「次へ」が二重に走らないようにする
 let frameLoaded = null; // 再生ページの読み込み完了を待つ Promise
+let watchdog = null; // 再生が始まらないときに知らせるタイマー
 
 function showScreen(message, { power = true } = {}) {
   $('message').textContent = message;
@@ -55,7 +57,12 @@ async function playNext() {
     frame.hidden = false;
     screen.hidden = true;
     bar.hidden = false;
-    $('info').textContent = `${regionName(video.region)} ・ ${video.channel} ・ ${video.title}`;
+    const info = `${regionName(video.region)} ・ ${video.channel} ・ ${video.title}`;
+    $('info').textContent = info;
+    clearTimeout(watchdog);
+    watchdog = setTimeout(() => {
+      if (mine === ticket) $('info').textContent = `再生が始まりません。「次へ」を試してください ・ ${info}`;
+    }, START_TIMEOUT_MS);
   } catch (e) {
     if (mine !== ticket) return;
     showScreen(describeError(e));
@@ -65,7 +72,9 @@ async function playNext() {
 
 window.addEventListener('message', (ev) => {
   if (ev.origin !== PLAYER_ORIGIN || ev.source !== frame.contentWindow) return;
-  if (ev.data?.type === 'ended') {
+  if (ev.data?.type === 'playing') {
+    clearTimeout(watchdog);
+  } else if (ev.data?.type === 'ended') {
     playNext();
   } else if (ev.data?.type === 'error') {
     // 埋め込み不可などは見せずに次へ進める
