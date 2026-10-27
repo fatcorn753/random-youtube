@@ -1,0 +1,16 @@
+{
+  "manifest_version": 3,
+  "name": "ランダムYoutube",
+  "version": "0.1.0",
+  "description": "YouTube をテレビのように。選べない、ランダムな人気動画が流れ続けます。",
+  "action": {
+    "default_title": "ランダムYoutube を開く"
+  },
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "options_page": "options.html",
+  "permissions": ["storage"],
+  "host_permissions": ["https://www.googleapis.com/*"]
+}
