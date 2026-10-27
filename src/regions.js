@@ -43,6 +43,14 @@ export const REGION_GROUPS = [
 
 export const ALL_REGION_CODES = REGION_GROUPS.flatMap((g) => g.codes);
 
+// 大陸ボタン用。全部入っていれば外し、そうでなければ足す（元の Set は変えずに返す）
+export function toggleGroup(selected, group) {
+  const next = new Set(selected);
+  const allOn = group.codes.every((c) => next.has(c));
+  for (const c of group.codes) allOn ? next.delete(c) : next.add(c);
+  return next;
+}
+
 // 国名は Intl に任せる（API の i18nRegions は表記ゆれがあるため使わない）
 export function regionName(code, locale = 'ja') {
   try {

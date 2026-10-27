@@ -71,3 +71,5 @@ button:focus-visible, input:focus-visible { outline: 2px solid var(--accent); ou
 
 #list li[hidden] { display: none; }
 #list label { display: block; padding: 5px 4px; cursor: pointer; font-size: 14px; }
+
+.check { display: inline-flex; gap: 6px; align-items: center; margin-bottom: 8px; cursor: pointer; }

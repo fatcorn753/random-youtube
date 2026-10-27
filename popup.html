@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>ランダムYoutube</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <button id="watch" type="button" class="primary">視聴画面を開く</button>
+
+  <section id="tableSection">
+    <h2>今日の番組表 <span class="tag">毎日ランダム</span></h2>
+    <ol id="table" class="table"></ol>
+  </section>
+
+  <section>
+    <h2>今日見た動画 <span id="total" class="num"></span></h2>
+    <p id="distEmpty" class="note" hidden>まだ見ていません。</p>
+    <div id="distBody">
+      <h3>ジャンル</h3>
+      <ul id="genreDist" class="dist"></ul>
+      <h3>国</h3>
+      <ul id="regionDist" class="dist"></ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>流す国</h2>
+    <p class="note">番組表はこの国の中から組まれます。変更は次の動画から反映されます。</p>
+    <div class="row">
+      <button id="selectAll" type="button">全選択</button>
+      <button id="clearAll" type="button">全解除</button>
+      <span id="count" class="count" role="status"></span>
+    </div>
+    <div id="groups" class="row wrap"></div>
+  </section>
+
+  <button id="options" type="button" class="link">詳細設定（国の一覧・番組表のオン/オフ・API キー）</button>
+  <script type="module" src="popup.js"></script>
+</body>
+</html>
